@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
-const userController = require('../controllers/scrapControllers');
+const scrapController = require('../controllers/scrapControllers');
 
-router.post('/flipkart/mobile', userController.fetchData);
+router.post('/flipkart/mobile', scrapController.fetchMobiles);
+
+router.post('/snapdeal/mobile', scrapController.fetchShirts);
 
 module.exports = router;

@@ -1,7 +1,7 @@
 const rp = require('request-promise');
 const cheerio = require('cheerio');
 
-let fetchData = async (req, res, next) => {
+let fetchMobiles = async (req, res, next) => {
     const url = req.body.url;
     rp(url)
         .then(function (html) {
@@ -20,7 +20,29 @@ let fetchData = async (req, res, next) => {
             res.status(301).send(err);
         })
 };
+
+let fetchShirts = async (req, res) => {
+    const url = req.body.url;
+    rp(url)
+        .then(function (html) {
+            const $ = cheerio.load(html);
+            const wikiName = [];
+            $('.product-desc-rating').each(function (i, elem) {
+                wikiName[i] = {
+                    name: $(this).find($('.product-title')).text(),
+                    maxPrice: $(this).find($('.product-desc-price')).text(),
+                    discountPrice: $(this).find($('.product-price')).text()
+                };
+            })
+            res.send(wikiName);
+        })
+        .catch(function (err) {
+            res.status(301).send(err);
+        })
+}
+
 module.exports = {
-    fetchData
+    fetchMobiles,
+    fetchShirts
 };
 
