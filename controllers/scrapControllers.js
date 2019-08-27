@@ -20,7 +20,6 @@ let fetchData = async (req, res, next) => {
             res.status(301).send(err);
         })
 };
-
 module.exports = {
     fetchData
 };
